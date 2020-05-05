@@ -1,0 +1,40 @@
+
+ kubectl create -f deployment-upgrade.yml --record 
+ 
+ kubectl rollout status deployment/myapp-deployment  
+ 
+ kubectl describe deployment myapp-deployment 
+ 
+ kubectl rollout history deployment/myapp-deployment 
+ 
+ kubectl get replicaset 
+ 
+NAME                          DESIRED   CURRENT   READY   AGE
+myapp-deployment-5b5f875f76   6         6         6       8m43s
+myapp-deployment-69b876cdb4   0         0         0       4m33s
+ 
+ vi deployment-upgrade.yml ( change the version in yaml file )
+ 
+ kubectl apply -f deployment-upgrade.yml 
+ 
+ kubectl rollout status deployment/myapp-deployment 
+ 
+ kubectl rollout history deployment/myapp-deployment 
+ 
+ kubectl get replicaset 
+NAME                          DESIRED   CURRENT   READY   AGE
+myapp-deployment-5b5f875f76   0         0         0       6m57s
+myapp-deployment-69b876cdb4   6         6         6       2m47s
+ 
+
+ kubectl rollout undo deployment/myapp-deployment  ( rollback the changes )
+
+ kubectl get replicaset 
+ 
+NAME                          DESIRED   CURRENT   READY   AGE
+myapp-deployment-5b5f875f76   6         6         6       8m43s
+myapp-deployment-69b876cdb4   0         0         0       4m33s
+ 
+  
+
+

@@ -1,0 +1,42 @@
+## Thi YAML file is example for nodeSelector attribute
+## kubectl label node kslave1 color=blue
+
+apiVersion:
+kind:
+metadata:
+  name: my-pod
+  labels:
+   app: myapp
+   type: frontend
+specs:
+  containers:
+   - name: nginx
+     image: nginx
+  nodeSelector:
+   color : blue
+ 
+ 
+## Node selector with replica set
+
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: nginx-test
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: nginx
+      namespace: default
+      labels:
+        env: beta
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        color: blue
+       
